@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- dashboard -->
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12 py-3" style="background-color: aquamarine;">
+            <h1 class="text-center">Dashboard</h1>
+            {% include 'flash.html' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <!-- show graph -->
+            {{graph|safe}}
+            {{graph2|safe}}
+
+        </div>
+        <div class="col-md-6">
+            <table class="table table-striped">
+                {{ emotion_data|safe }}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    $(document).ready(function () {
+        // change the path in table in column 2 into img src
+        var table = $('.dataframe')
+        var rows = table.find('tr')
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i]
+            var cells = row.cells
+            var cell = cells[2]
+            var path = cell.innerText
+            cell.innerHTML = '<img src="' + path + '" alt="emotion" width="100" height="100">'
+        }
+
+        $('.dataframe').DataTable();
+
+
+    });
+
+</script>
+{% endblock %}
